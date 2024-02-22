@@ -19,4 +19,4 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-Route::get('/', [App\Http\Controllers\FormController::class]);
+Route::get('/', [App\Http\Controllers\FormController::class, 'index']);
