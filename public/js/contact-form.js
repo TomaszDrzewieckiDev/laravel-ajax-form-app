@@ -21,14 +21,10 @@ var __webpack_exports__ = {};
   !*** ./resources/js/form/contact-form.js ***!
   \*******************************************/
 __webpack_require__.r(__webpack_exports__);
-// $.validator.methods.telephone = function( value, element ) {
-//     return this.optional( element ) || /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test( value );
-
-//   }
 $('#contactForm').validate({
-  submitHandler: function submitHandler(form) {
-    $(form).ajaxSubmit();
-  },
+  // submitHandler: function(form) {
+  //     $(form).ajaxSubmit();
+  //   },
   rules: {
     name: {
       required: true,

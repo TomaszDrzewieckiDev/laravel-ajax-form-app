@@ -3,29 +3,39 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title>Laravel-form-app</title>
-
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        {{-- <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" /> --}}
+        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+         <!-- Css -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-
-
-        <!-- Styles -->
-       <style>
-        </style>
-    </head>
+<script>
+    function validateFile() {
+	$("#file_error").html("");
+	$("#file").css("border-color","#F0F0F0");
+	var file_size = $('#file')[0].files[0].size;
+	if(file_size>5242880) {
+		$("#file_error").html("Przekroczony rozmiar pliku! Maksymalny dozwolony rozmiar pliku: 5MB");
+		$("#file").css("border-color","#FF0000");
+		return false;
+	}
+	return true;
+}
+</script>
+<!-- Styles -->
+<style>
+</style>
+</head>
     <body>
         <div class="container">
             <main>
                     <h1>Hello, ajax-form-app!</h1>
-                    <form   id="contactForm">
+                    <form   id="contactForm" onSubmit="return validateFile();">
                         <div class="mb-3">
                             <label for="name" class="form-label">Imie i nazwisko</label>
                             <input type="text" class="form-control" name="name" id="name">
@@ -45,15 +55,12 @@
                         <div class="mb-3">
                             <label for="file" class="form-label">Załącznik</label>
                             <input class="form-control form-control-sm" id="file" name="file" type="file" accept="image/jpeg,application/pdf">
+                            <span id="file_error"></span>
                         </div>
                         <button type="submit" class="btn btn-primary">Wyślij</button>
                     </form>
-
-
-<script src="{{ asset('js/contact-form.js') }}"></script>
-
-
             </main>
         </div>
+<script src="{{ asset('js/contact-form.js') }}"></script>
     </body>
 </html>
