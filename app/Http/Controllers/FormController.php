@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\View\View;
+
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
-use App\Http\Requests;
+
 use App\Http\Controllers\Controller;
 
 class FormController extends Controller
@@ -23,10 +24,19 @@ class FormController extends Controller
     /**
      * Store a new contact form data.
      */
-    public function store()
+    public function store(Request $request)
     {
-        die;print_r("fd");
-        $msg = "This is a simple message.";
-      return response()->json(array('msg'=> $msg), 200);
-    }
+
+        // $validated = $request->validate([
+        //     'name' => 'required|unique:posts|max:5',
+        //     'telephone' => 'required',
+        // ]);
+
+            // return response()->json( [ 'success' => 'Customer registered successfully!' ] );
+
+
+
+        $msg = "This is a simple message";
+      return response()->json(array('msg'=> $request->get('name')), 200);
+ }
 }

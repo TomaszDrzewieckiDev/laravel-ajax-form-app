@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Laravel-form-app</title>
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -25,17 +26,24 @@
 		return false;
 	}
 	return true;
+}
+function getMessage() {
+    let form = $('#contactForm')[0];
+     let formData = new FormData(form);
 
     $.ajax({
           type:'POST',
-          url:'/getmsg',
-          data:'_token = <?php echo csrf_token() ?>',
+          url:window.location.pathname+'getmsg',
+          headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+          data: formData,
+          dataType:"JSON",
+          processData : false,
+          contentType:false,
           success:function(data) {
              $("#msg").html(data.msg);
-          }
-       });
-
-}
+            }
+            });
+         }
 </script>
 <!-- Styles -->
 <style>
@@ -69,7 +77,8 @@
                             <input class="form-control form-control-sm" id="file" name="file" type="file" accept="image/jpeg,application/pdf">
                             <span id="file_error"></span>
                         </div>
-                        <button type="submit" class="btn btn-primary" onClick="validateFile();">Wyślij</button>
+                        {{-- validateFile(). --}}
+                        <input type="button" class="btn btn-warning btn-sm" id="sub" onClick="getMessage();" value="Wyślij">
                     </form>
             </main>
         </div>
