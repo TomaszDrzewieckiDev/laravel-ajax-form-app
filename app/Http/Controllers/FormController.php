@@ -9,6 +9,7 @@ use Illuminate\View\View;
 
 
 use App\Http\Controllers\Controller;
+use Exception;
 
 class FormController extends Controller
 {
@@ -18,7 +19,6 @@ class FormController extends Controller
     public function index(): View
     {
         return view('form.index');
-
     }
 
     /**
@@ -26,17 +26,32 @@ class FormController extends Controller
      */
     public function store(Request $request)
     {
-
-        // $validated = $request->validate([
-        //     'name' => 'required|unique:posts|max:5',
-        //     'telephone' => 'required',
-        // ]);
-
-            // return response()->json( [ 'success' => 'Customer registered successfully!' ] );
-
+        try {
+            $this->isValidName($request->get('name'));
+            $this->isTelephone($request->get('telephone'));
+        } catch (Exception $e) {
+            return response()->json(array('msg' => $e->getMessage()), 200);
+        }
 
 
-        $msg = "This is a simple message";
-      return response()->json(array('msg'=> $request->get('name')), 200);
- }
+        return response()->json(array('msg' => 'Poprawnie wysłano formularz'), 200);
+    }
+
+    public function isValidName($name): bool
+    {
+        if (strlen($name) <= 100) {
+            return true;
+        } else {
+            throw new Exception('Pole: Imie i Nazwisko - Za długi wpis');
+        }
+    }
+
+    public function isValidTelephone($telephone): bool
+    {
+        if (is_int($telephone) <= 10) {
+            return true;
+        } else {
+            throw new Exception('Pole: Telefon - Akceptowane tylko cyfry');
+        }
+    }
 }

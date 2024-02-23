@@ -41,6 +41,7 @@ function getMessage() {
           contentType:false,
           success:function(data) {
              $("#msg").html(data.msg);
+             $("#name_error").html(data.name);
             }
             });
          }
@@ -53,12 +54,12 @@ function getMessage() {
         <div class="container">
             <main>
                     <h1>Hello, ajax-form-app!</h1>
-                    <div id = 'msg'>This message will be replaced using Ajax.
-                        Click the button to replace the message.</div>
+                    <div class="text-danger" id = 'msg'></div>
                     <form   id="contactForm" >
                         <div class="mb-3">
                             <label for="name" class="form-label">Imie i nazwisko</label>
-                            <input type="text" class="form-control" name="name" id="name">
+                            <input type="text" class="form-control"  name="name" id="name">
+                            <div id='name_error'></div>
                         </div>
                         <div class="mb-3">
                             <label for="telephone" class="form-label">Numer telefonu</label>
@@ -66,11 +67,11 @@ function getMessage() {
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Adres email</label>
-                            <input type="email" class="form-control is-invalid" name="email" id="email">
+                            <input type="email" class="form-control" name="email" id="email">
                         </div>
                         <div class="mb-3">
                             <label for="content" class="form-label">Treść wiadomości</label>
-                            <textarea class="form-control is-invalid" id="textarea" name="content" placeholder="Wpisz.." maxlength="100"></textarea>
+                            <textarea class="form-control" id="textarea" name="content" placeholder="Wpisz.." maxlength="100"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="file" class="form-label">Załącznik</label>
