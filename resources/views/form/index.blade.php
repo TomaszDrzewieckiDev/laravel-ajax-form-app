@@ -18,13 +18,23 @@
     function validateFile() {
 	$("#file_error").html("");
 	$("#file").css("border-color","#F0F0F0");
-	var file_size = $('#file')[0].files[0].size;
-	if(file_size>5242880) {
+	var file_size = $('#file')[0].files[0];
+	if(file_size.size>5242880) {
 		$("#file_error").html("Przekroczony rozmiar pliku! Maksymalny dozwolony rozmiar pliku: 5MB");
 		$("#file").css("border-color","#FF0000");
 		return false;
 	}
 	return true;
+
+    $.ajax({
+          type:'POST',
+          url:'/getmsg',
+          data:'_token = <?php echo csrf_token() ?>',
+          success:function(data) {
+             $("#msg").html(data.msg);
+          }
+       });
+
 }
 </script>
 <!-- Styles -->
@@ -35,7 +45,9 @@
         <div class="container">
             <main>
                     <h1>Hello, ajax-form-app!</h1>
-                    <form   id="contactForm" onSubmit="return validateFile();">
+                    <div id = 'msg'>This message will be replaced using Ajax.
+                        Click the button to replace the message.</div>
+                    <form   id="contactForm" >
                         <div class="mb-3">
                             <label for="name" class="form-label">Imie i nazwisko</label>
                             <input type="text" class="form-control" name="name" id="name">
@@ -57,7 +69,7 @@
                             <input class="form-control form-control-sm" id="file" name="file" type="file" accept="image/jpeg,application/pdf">
                             <span id="file_error"></span>
                         </div>
-                        <button type="submit" class="btn btn-primary">Wyślij</button>
+                        <button type="submit" class="btn btn-primary" onClick="validateFile();">Wyślij</button>
                     </form>
             </main>
         </div>

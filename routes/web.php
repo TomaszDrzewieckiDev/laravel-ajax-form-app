@@ -20,3 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [App\Http\Controllers\FormController::class, 'index']);
+Route::get('ajax',function() {
+    return view('message');
+ });
+ Route::post('/getmsg','FormController@create');

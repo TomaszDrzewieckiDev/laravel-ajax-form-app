@@ -6,6 +6,9 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
 class FormController extends Controller
 {
     /**
@@ -20,14 +23,10 @@ class FormController extends Controller
     /**
      * Store a new contact form data.
      */
-    // public function store(Request $request): RedirectResponse
-    // {
-    //     $validated = $request->validate([
-    //         'title' => 'required|unique:posts|max:255',
-    //         'body' => 'required',
-    //     ]);
-    //    // $post = /** ... */
-
-    //   //  return to_route('post.show', ['post' => $post->id]);
-    // }
+    public function store()
+    {
+        die;print_r("fd");
+        $msg = "This is a simple message.";
+      return response()->json(array('msg'=> $msg), 200);
+    }
 }
