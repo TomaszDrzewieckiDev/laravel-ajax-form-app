@@ -5,7 +5,7 @@ $('#contactForm').validate({
 
    rules: {
      name: {
-       required: false,
+       required: true,
        maxlength: 100
      },
      telephone: {

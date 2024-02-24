@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Constans;
 use App\Helpers\FormValidator;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -41,7 +41,7 @@ class FormController extends Controller
     /**
      * WALIDACJA OK -> TUTAJ ZAPIS DANYCH Z FORMULARZA
      */
-        return response()->json(array('saved' => 'Poprawnie zapisano formularz'), 200);
+        return response()->json(array('saved' => Constans::SAVED_WITH_SUCCESS), 200);
     }
 
 

@@ -24,7 +24,7 @@ __webpack_require__.r(__webpack_exports__);
 $('#contactForm').validate({
   rules: {
     name: {
-      required: false,
+      required: true,
       maxlength: 100
     },
     telephone: {
