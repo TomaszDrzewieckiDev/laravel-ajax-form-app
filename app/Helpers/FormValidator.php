@@ -27,7 +27,8 @@ class FormValidator
 
     public function isValidEmail($email)
     {
-        if (preg_match("/^[a-zA-Z-' ]*$/", $email)) {
+        $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
+        if (preg_match($regex, $email)) {
             return true;
         } else {
             throw new Exception('Pole: Email - Wpisz poprawnie email');
