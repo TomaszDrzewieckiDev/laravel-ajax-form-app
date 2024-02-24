@@ -17,34 +17,42 @@
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <script>
     function validateFile() {
-	$("#file_error").html("");
-	$("#file").css("border-color","#F0F0F0");
-	var file_size = $('#file')[0].files[0];
-	if(file_size.size>5242880) {
-		$("#file_error").html("Przekroczony rozmiar pliku! Maksymalny dozwolony rozmiar pliku: 5MB");
-		$("#file").css("border-color","#FF0000");
-		return false;
-	}
-	return true;
-}
-function getMessage() {
-    let form = $('#contactForm')[0];
-     let formData = new FormData(form);
+        $("#file_error").html("");
+        $("#file").css("border-color","#F0F0F0");
+        var file_size = $('#file')[0].files[0];
+        if(file_size.size>5242880) {
+            $("#file_error").html("Przekroczony rozmiar pliku! Maksymalny dozwolony rozmiar pliku: 5MB");
+            $("#file").css("border-color","#FF0000");
+            return false;
+        }
+        return true;
+    }
+    function getMessage() {
+    if($('#file')[0].files[0]){
+        validateFile();
+        }
+        let form = $('#contactForm')[0];
+        let formData = new FormData(form);
+        let file = $('#file')[0].files[0];
+        formData.append('file', file);
 
-    $.ajax({
-          type:'POST',
-          url:window.location.pathname+'getmsg',
-          headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-          data: formData,
-          dataType:"JSON",
-          processData : false,
-          contentType:false,
-          success:function(data) {
-             $("#msg").html(data.msg);
-             $("#saved").html(data.saved);
+        $.ajax({
+            method:'POST',
+            url:window.location.pathname+'getmsg',
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+            data: formData,
+            dataType:"JSON",
+            processData : false,
+            mimeType: 'multipart/form-data',
+            contentType:false,
+            success:function(data) {
+                $("#msg").html("")
+                $("#msg").html(data.msg);
+                $("#saved").html("")
+                $("#saved").html(data.saved);
+                }
+                });
             }
-            });
-         }
 </script>
 <!-- Styles -->
 <style>
@@ -56,7 +64,7 @@ function getMessage() {
                     <h1>Hello, ajax-form-app!</h1>
                     <div class="text-danger" id = 'msg'></div>
                     <div class="text-success" id = 'saved'></div>
-                    <form   id="contactForm" >
+                    <form  method='POST'  id="contactForm" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="name" class="form-label">Imie i nazwisko</label>
                             <input type="text" class="form-control  @error('name') is-invalid @enderror"  name="name" id="name">
@@ -64,7 +72,7 @@ function getMessage() {
                         </div>
                         <div class="mb-3">
                             <label for="telephone" class="form-label">Numer telefonu</label>
-                            <input  name="telephone" class="form-control" id="telephone">
+                            <input   name="telephone" class="form-control" id="telephone">
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Adres email</label>
@@ -76,7 +84,8 @@ function getMessage() {
                         </div>
                         <div class="mb-3">
                             <label for="file" class="form-label">Załącznik</label>
-                            <input class="form-control form-control-sm" id="file" name="file" type="file" accept="image/jpeg,application/pdf">
+                            <input class="form-control form-control-sm" id="file" name="file" type="file"   accept="image/jpeg,application/pdf">
+
                             <span id="file_error"></span>
                         </div>
                         {{-- validateFile(). --}}

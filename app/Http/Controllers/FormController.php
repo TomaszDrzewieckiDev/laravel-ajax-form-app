@@ -24,19 +24,22 @@ class FormController extends Controller
      */
     public function store(Request $request)
     {
+
         $fv= new FormValidator;
         try {
             $fv->isValidName($request->get('name'));
             $fv->isValidTelephone($request->get('telephone'));
             $fv->isValidEmail($request->get('email'));
             $fv->isValidContenet($request->get('content'));
-            $fv->isValidFile($request->get('file'));
+            $fv->isValidFileType($_FILES['file']['name']);
+            $fv->isValidFileSize($_FILES['file']['name']);
+
         } catch (Exception $e) {
             return response()->json(array('msg' => $e->getMessage()), 200);
         }
 
     /**
-     * ZAPIS DANYCH Z FORMULARZA
+     * WALIDACJA OK -> TUTAJ ZAPIS DANYCH Z FORMULARZA
      */
         return response()->json(array('saved' => 'Poprawnie zapisano formularz'), 200);
     }

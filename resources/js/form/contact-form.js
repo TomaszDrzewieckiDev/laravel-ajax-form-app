@@ -3,12 +3,9 @@
 
 $('#contactForm').validate({
 
-    // submitHandler: function(form) {
-    //     $(form).ajaxSubmit();
-    //   },
    rules: {
      name: {
-       required: true,
+       required: false,
        maxlength: 100
      },
      telephone: {
@@ -16,11 +13,11 @@ $('#contactForm').validate({
         number: true
      },
      email: {
-        required: true,
+        required: false,
         email: true
      },
      content: {
-        required: true,
+        required: false,
         maxlength: 500
      },
      file: {
