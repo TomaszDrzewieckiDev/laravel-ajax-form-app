@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Helpers\FormValidator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -13,9 +13,7 @@ use Exception;
 
 class FormController extends Controller
 {
-    /**
-     * Show the form to create a new contact form.
-     */
+
     public function index(): View
     {
         return view('form.index');
@@ -26,32 +24,22 @@ class FormController extends Controller
      */
     public function store(Request $request)
     {
+        $fv= new FormValidator;
         try {
-            $this->isValidName($request->get('name'));
-            $this->isTelephone($request->get('telephone'));
+            $fv->isValidName($request->get('name'));
+            $fv->isValidTelephone($request->get('telephone'));
+            $fv->isValidEmail($request->get('email'));
+            $fv->isValidContenet($request->get('content'));
+            $fv->isValidFile($request->get('file'));
         } catch (Exception $e) {
             return response()->json(array('msg' => $e->getMessage()), 200);
         }
 
-
-        return response()->json(array('msg' => 'Poprawnie wysłano formularz'), 200);
+    /**
+     * ZAPIS DANYCH Z FORMULARZA
+     */
+        return response()->json(array('saved' => 'Poprawnie zapisano formularz'), 200);
     }
 
-    public function isValidName($name): bool
-    {
-        if (strlen($name) <= 100) {
-            return true;
-        } else {
-            throw new Exception('Pole: Imie i Nazwisko - Za długi wpis');
-        }
-    }
 
-    public function isValidTelephone($telephone): bool
-    {
-        if (is_int($telephone) <= 10) {
-            return true;
-        } else {
-            throw new Exception('Pole: Telefon - Akceptowane tylko cyfry');
-        }
-    }
 }

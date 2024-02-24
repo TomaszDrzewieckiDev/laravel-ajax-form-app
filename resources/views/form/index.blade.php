@@ -41,7 +41,7 @@ function getMessage() {
           contentType:false,
           success:function(data) {
              $("#msg").html(data.msg);
-             $("#name_error").html(data.name);
+             $("#saved").html(data.saved);
             }
             });
          }
@@ -55,10 +55,11 @@ function getMessage() {
             <main>
                     <h1>Hello, ajax-form-app!</h1>
                     <div class="text-danger" id = 'msg'></div>
+                    <div class="text-success" id = 'saved'></div>
                     <form   id="contactForm" >
                         <div class="mb-3">
                             <label for="name" class="form-label">Imie i nazwisko</label>
-                            <input type="text" class="form-control"  name="name" id="name">
+                            <input type="text" class="form-control  @error('name') is-invalid @enderror"  name="name" id="name">
                             <div id='name_error'></div>
                         </div>
                         <div class="mb-3">
